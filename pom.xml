@@ -56,12 +56,12 @@
             <version>4.8.2</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-search</artifactId>
-            <version>4.5.0.Final</version>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.1.9.Final</version>
         </dependency>
+
     </dependencies>
 
     <build>
