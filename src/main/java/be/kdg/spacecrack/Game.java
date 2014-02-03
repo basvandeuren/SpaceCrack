@@ -9,7 +9,5 @@ package be.kdg.spacecrack;
  */
 
 public class Game {
-    public static void main(String[] args) {
-        
-    }
+
 }
