@@ -1,5 +1,10 @@
 package be.kdg.spacecrack;
 
+import be.kdg.spacecrack.utilities.HibernateUtil;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,14 +22,23 @@ public class GameController {
         this.games = new ArrayList<Game>();
     }
 
-    public Game createNewGame() {
+    public int createNewGame() {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
         Game game;
         game = new Game();
-        games.add(game);
-        return game;
+        session.saveOrUpdate(game);
+        tx.commit();
+        return game.getGameId();
     }
 
     public Game getGame(int gameId) {
-        return games.get(gameId );
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
+        @SuppressWarnings("JpaQlInspection") Query q = session.createQuery("FROM be.kdg.spacecrack.Game g where g.gameId = :gameId");
+        q.setParameter("gameId", gameId);
+        Game game = (Game)q.uniqueResult();
+        tx.commit();
+        return game;
     }
 }
