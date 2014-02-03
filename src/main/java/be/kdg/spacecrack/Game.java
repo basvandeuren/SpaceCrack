@@ -1,8 +1,13 @@
 package be.kdg.spacecrack;
 
-/**
- * Created by Ikke on 3-2-14.
+/* Git $Id$
+ *
+ * Project Application Development
+ * Karel de Grote-Hogeschool
+ * 2013-2014
+ *
  */
+
 public class Game {
 
 }

@@ -3,8 +3,12 @@ package be.kdg.spacecrack;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ikke on 3-2-14.
+/* Git $Id$
+ *
+ * Project Application Development
+ * Karel de Grote-Hogeschool
+ * 2013-2014
+ *
  */
 public class GameController {
     List<Game> games;
