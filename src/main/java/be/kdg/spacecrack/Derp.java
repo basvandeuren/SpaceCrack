@@ -5,6 +5,6 @@ package be.kdg.spacecrack;
  */
 public class Derp {
     public static void main(String[] args) {
-        
+
     }
 }
