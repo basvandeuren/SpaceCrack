@@ -7,6 +7,7 @@ import be.kdg.spacecrack.utilities.HibernateUtil;
 import be.kdg.spacecrack.utilities.ITokenValueGenerator;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/accesstokens")
 public class TokenController {
+    @Autowired
     private ITokenValueGenerator generator;
 
     public TokenController() {
