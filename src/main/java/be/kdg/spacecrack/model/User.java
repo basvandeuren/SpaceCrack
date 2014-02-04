@@ -9,13 +9,14 @@ import java.io.Serializable;
 @Entity
 @Table(name="T_User")
 public class User implements Serializable{
-    @Id
-    @GeneratedValue
+
     private int id;
-    @Column
+
     private String name;
-    @Column
+
     private String password;
+
+    private AccessToken token;
 
     public User() {
         System.out.println("lol");
@@ -26,12 +27,40 @@ public class User implements Serializable{
         this.password = password;
     }
 
+    @Id
+    @GeneratedValue
+    public int getId() {
+        return id;
+    }
 
+    @Column
     public String getName() {
         return name;
     }
 
+    @Column
     public String getPassword() {
         return password;
+    }
+
+    @OneToOne(mappedBy ="user", cascade = CascadeType.ALL)
+    public AccessToken getToken() {
+        return token;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setToken(AccessToken token) {
+        this.token = token;
     }
 }

@@ -9,20 +9,20 @@ import java.util.Random;
  * Created by Tim on 4/02/14.
  */
 @Component("generator")
-public class TokenValueGenerator implements ITokenValueGenerator{
+public class TokenStringGenerator implements ITokenStringGenerator {
     long seed;
  Random random;
-    public TokenValueGenerator(long seed) {
+    public TokenStringGenerator(long seed) {
         random = new Random(seed);
     }
 
-    public TokenValueGenerator() {
+    public TokenStringGenerator() {
          random = new Random();
     }
 
 
     @Override
-    public String generateToken() {
+    public String generateTokenString() {
         return new BigInteger(130, random ).toString(32);
     }
 }

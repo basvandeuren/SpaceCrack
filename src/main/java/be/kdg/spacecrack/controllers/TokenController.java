@@ -4,7 +4,7 @@ import be.kdg.spacecrack.Exceptions.UserNotFoundException;
 import be.kdg.spacecrack.model.AccessToken;
 import be.kdg.spacecrack.model.User;
 import be.kdg.spacecrack.utilities.HibernateUtil;
-import be.kdg.spacecrack.utilities.ITokenValueGenerator;
+import be.kdg.spacecrack.utilities.ITokenStringGenerator;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,37 +21,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/accesstokens")
 public class TokenController {
     @Autowired
-    private ITokenValueGenerator generator;
+    private ITokenStringGenerator generator;
 
     public TokenController() {
     }
 
-    public TokenController(ITokenValueGenerator generator) {
+    public TokenController(ITokenStringGenerator generator) {
         this.generator = generator;
     }
 
 
      @RequestMapping(method = RequestMethod.POST, value="/request",consumes = "application/json")
       public @ResponseBody AccessToken getToken(@RequestBody User user) {
+
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
         org.hibernate.Transaction tx = session.beginTransaction();
-        System.out.println("transaction started");
-        @SuppressWarnings("JpaQlInspection") Query q = session.createQuery("from User u where u.name = :name and u.password = :password");
+
+         @SuppressWarnings("JpaQlInspection") Query q = session.createQuery("from User u where u.name = :name and u.password = :password");
         q.setParameter("name", user.getName());
         q.setParameter("password", user.getPassword());
-        User result = (User) q.uniqueResult();
-        tx.commit();
+        User dbUser = (User) q.uniqueResult();
 
-        if(result == null)
+
+        if(dbUser == null)
         {
+
+            tx.commit();
+
             throw new UserNotFoundException();
         }
-        System.out.println("transaction committed");
 
-        String tokenvalue = generator.generateToken();
-        AccessToken accessToken = new AccessToken(tokenvalue);
 
+         AccessToken accessToken = dbUser.getToken();
+         if(accessToken == null){
+             String tokenvalue = generator.generateTokenString();
+             accessToken = new AccessToken(tokenvalue);
+             dbUser.setToken(accessToken);
+         }
+       //  session.saveOrUpdate(accessToken);
+        session.saveOrUpdate(dbUser);
+        tx.commit();
         return accessToken;
 
     }
