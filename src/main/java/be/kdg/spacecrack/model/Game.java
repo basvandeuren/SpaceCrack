@@ -1,4 +1,4 @@
-package be.kdg.spacecrack;
+package be.kdg.spacecrack.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

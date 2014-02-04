@@ -1,6 +1,6 @@
 package be.kdg.spacecrack.utilities;
 
-import be.kdg.spacecrack.Game;
+import be.kdg.spacecrack.model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -12,8 +12,9 @@ public class generateSamplesForDatabase {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
 
-        Game game = new Game();
-        session.saveOrUpdate(game);
+      //  Game game = new Game();
+        User user = new User("test","test");
+        session.saveOrUpdate(user);
         tx.commit();
     }
 }

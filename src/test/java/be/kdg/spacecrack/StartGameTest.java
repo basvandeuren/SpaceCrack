@@ -1,12 +1,16 @@
 package be.kdg.spacecrack;
 
+import be.kdg.spacecrack.controllers.GameController;
+import be.kdg.spacecrack.model.Game;
 import be.kdg.spacecrack.utilities.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 /**
  * Created by Ikke on 3-2-14.
@@ -15,15 +19,16 @@ public class StartGameTest {
 
 
     private final GameController gameController = new GameController();
+    private Game testgame;
 
     @Before
     public void setUp() throws Exception {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Transaction tx = session.beginTransaction();
-
-        Game game = new Game();
-        session.saveOrUpdate(game);
+        testgame = new Game();
+        session.saveOrUpdate(testgame);
         tx.commit();
+
 
     }
 
@@ -51,5 +56,13 @@ public class StartGameTest {
         assertEquals(gameId ,gameController.getGame(gameId).getGameId());
     }
 
+    @After
+    public void tearDown() throws Exception {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Transaction tx = session.beginTransaction();
 
+        session.delete(testgame);
+        tx.commit();
+
+    }
 }

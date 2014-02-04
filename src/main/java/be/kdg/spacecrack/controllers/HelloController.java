@@ -1,4 +1,4 @@
-package be.kdg.spacecrack;
+package be.kdg.spacecrack.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
